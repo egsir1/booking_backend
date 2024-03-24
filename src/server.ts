@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import "dotenv/config"
-
+import userRoutes from '../src/routes/users'
 import mongoose from 'mongoose';
 
 mongoose.connect(process.env.MONGODB_CONNECTION as string)
@@ -16,9 +16,7 @@ app.use(cors({
 }));
 
 
-app.get("/api/test", async (req: Request, res: Response)=> {
-    res.json({message:"Bismillah"})
-})
+app.use("/api/users", userRoutes)
 
 app.listen(7000, ()=> {
     console.log("Server is running on port 7000")
