@@ -16,7 +16,7 @@ router.post("/register",
   ],
 async (req: Request, res: Response) => {
     const errors = validationResult(req);
-    console.log("🚀 ~ errors:", errors)
+    // console.log("🚀 ~ errors:", errors)
   /*   if(!errors.isEmpty()) {
         return res.status(400).json({message: errors.array()})
     } */
@@ -33,15 +33,16 @@ user = new User(req.body);
 await user.save();
 
 const token = jwt.sign({
-    userId: user._id
+    userId: user.id
 }, process.env.JWT_SECRET_KEY as string, {expiresIn: "1d"})
 res.cookie("auth_token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 86400000
-})
+    httpOnly: true, // Recommended for security if you don't need client-side access
+    secure: process.env.NODE_ENV === "production", // Ensure this matches your environment
+    maxAge: 86400000 // 24 hours
+});
 
-return res.sendStatus(200)
+
+return res.status(200).send({message: "User registred successfully!"})
 
 } catch(error) {
         console.log("🚀 ~ router.post ~ error:", error)
