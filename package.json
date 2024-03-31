@@ -4,8 +4,9 @@
   "description": "",
   "main": "./src/server.ts",
   "scripts": {
-    "dev": "nodemon ./src/server.ts",
-    "start": "node ./src/server.ts"
+    "dev": "nodemon",
+    "start": "node ./dist/server.js",
+    "build": "npm install && npx tsc"
   },
   "author": "Sam",
   "license": "ISC",
